@@ -4,6 +4,12 @@ PLEASE NOTE: I vibecoded the crap out of this :)
 
 A visual tool for coordinating peer reviews across teams. Manage who reviews whom with an interactive 2D matrix, track review coverage, and ensure everyone gets quality feedback from senior team members.
 
+Live deployment: https://crimsoncrayfish.github.io/reviews-mapper
+
+Page URLs:
+- https://crimsoncrayfish.github.io/reviews-mapper/?page=people
+- https://crimsoncrayfish.github.io/reviews-mapper/?page=matrix
+
 ## Features
 
 ### Interactive Review Matrix
@@ -43,8 +49,9 @@ For each person, track:
 - **Excel Export**: Export full review matrix as .xlsx file
 
 ### URL Navigation
-- `/people` - People management page
-- `/mapping` - Review matrix page
+- `?page=people` - People management page
+- `?page=matrix` - Review matrix page
+- Legacy path links (`/mapping`, `/matrix`) still resolve to matrix for backward compatibility
 - Browser back/forward buttons work correctly
 
 ## Getting Started
@@ -61,13 +68,35 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5174](http://localhost:5174) in your browser.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Build for Production
 
 ```bash
 npm run build
 ```
+
+### Deploy to GitHub Pages
+
+This project is configured for GitHub Pages deployment using the `gh-pages` package and the `homepage` field in `package.json`.
+
+1. Ensure your repository remote points to the GitHub repo.
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Deploy:
+
+```bash
+npm run deploy
+```
+
+What this does:
+- Runs `npm run build` first via `predeploy`
+- Publishes the `dist` folder to the `gh-pages` branch
+- Serves the app at `https://crimsoncrayfish.github.io/reviews-mapper`
 
 ## How to Use
 
@@ -163,7 +192,7 @@ Perfect for large teams or presenting the matrix.
 
 ## Technical Stack
 
-- **Framework**: React 18 + Vite
+- **Framework**: React 19 + Vite
 - **State Management**: Zustand
 - **Drag & Drop**: @dnd-kit
 - **Styling**: Tailwind CSS v4

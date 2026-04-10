@@ -8,6 +8,10 @@ import * as XLSX from "xlsx";
 
 function App() {
   const getPageFromURL = () => {
+    const pageParam = new URLSearchParams(window.location.search).get("page");
+    if (pageParam === "mapping" || pageParam === "matrix") return "matrix";
+    if (pageParam === "people") return "people";
+
     const segment = window.location.pathname.split("/").filter(Boolean).pop();
     if (segment === "mapping" || segment === "matrix") return "matrix";
     return "people";
@@ -17,9 +21,11 @@ function App() {
   const { people, addToast, compactMode } = useStore();
 
   useEffect(() => {
-    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-    const path = currentPage === "matrix" ? "/mapping" : "/people";
-    window.history.pushState({}, "", `${base}${path}`);
+    const base = import.meta.env.BASE_URL.endsWith("/")
+      ? import.meta.env.BASE_URL
+      : `${import.meta.env.BASE_URL}/`;
+    const pageParam = currentPage === "matrix" ? "matrix" : "people";
+    window.history.pushState({}, "", `${base}?page=${pageParam}`);
   }, [currentPage]);
 
   useEffect(() => {
