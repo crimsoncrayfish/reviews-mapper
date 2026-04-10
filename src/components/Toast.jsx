@@ -11,24 +11,24 @@ export default function Toast({ message, type = 'success', onClose }) {
   }, [onClose]);
 
   const icons = {
-    success: <CheckCircle className="text-emerald-400" size={20} />,
-    error: <XCircle className="text-rose-400" size={20} />,
-    warning: <AlertCircle className="text-amber-400" size={20} />
+    success: <CheckCircle className="text-emerald-500 dark:text-emerald-400" size={20} />,
+    error: <XCircle className="text-rose-500 dark:text-rose-400" size={20} />,
+    warning: <AlertCircle className="text-amber-500 dark:text-amber-400" size={20} />
   };
 
   const colors = {
-    success: 'border-emerald-500/50 bg-emerald-950/90',
-    error: 'border-rose-500/50 bg-rose-950/90',
-    warning: 'border-amber-500/50 bg-amber-950/90'
+    success: 'border-emerald-300 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-950/90',
+    error: 'border-rose-300 dark:border-rose-500/50 bg-rose-50 dark:bg-rose-950/90',
+    warning: 'border-amber-300 dark:border-amber-500/50 bg-amber-50 dark:bg-amber-950/90'
   };
 
   return (
     <div className={`flex items-center gap-3 px-4 py-3 rounded-lg border ${colors[type]} shadow-2xl animate-slideIn backdrop-blur-sm`}>
       {icons[type]}
-      <p className="text-slate-100 font-medium flex-1">{message}</p>
+      <p className="text-gray-900 dark:text-slate-100 font-medium flex-1">{message}</p>
       <button
         onClick={onClose}
-        className="text-slate-400 hover:text-slate-100 transition-colors"
+        className="text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-slate-100 transition-colors"
       >
         <X size={18} />
       </button>

@@ -28,10 +28,36 @@ function saveToStorage(state) {
   }
 }
 
+function loadTheme() {
+  try {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  } catch {
+    return "dark";
+  }
+}
+
+function saveTheme(theme) {
+  try {
+    localStorage.setItem("theme", theme);
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  } catch (error) {
+    console.error("Failed to save theme:", error);
+  }
+}
+
 export const useStore = create((set, get) => ({
   ...loadFromStorage(),
   toasts: [],
   compactMode: false,
+  theme: loadTheme(),
   addPerson: (name, title, project = "") => {
     set((state) => {
       const newPerson = {
@@ -268,6 +294,23 @@ export const useStore = create((set, get) => ({
     set((state) => ({
       compactMode: !state.compactMode,
     }));
+  },
+
+  setCompactMode: (compactMode) => {
+    set({ compactMode: Boolean(compactMode) });
+  },
+
+  toggleTheme: () => {
+    set((state) => {
+      const newTheme = state.theme === "dark" ? "light" : "dark";
+      saveTheme(newTheme);
+      return { theme: newTheme };
+    });
+  },
+
+  setTheme: (theme) => {
+    saveTheme(theme);
+    set({ theme });
   },
 
   togglePersonFlag: (id) => {
